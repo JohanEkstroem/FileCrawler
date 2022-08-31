@@ -18,6 +18,10 @@ public class FileCrawler {
     File files[] = dir.listFiles();
     for (File file : files) {
       String data = file.getAbsolutePath();
+       boolean canRead = file.canRead();
+     if (!canRead){
+        System.out.println("Cannot read file:" + " " + data);
+      }
         if (file.isFile()) {
           searchFile(data, searchWord);
       
@@ -30,6 +34,7 @@ public class FileCrawler {
 
   private static void searchFile(String data, String searchWord) {
     File file = new File(data);
+
     try (Scanner scanner = new Scanner(file)) {
       while (scanner.hasNext()) {
         String word = scanner.next();
@@ -38,7 +43,7 @@ public class FileCrawler {
         }
       } 
     } catch (FileNotFoundException e) {
-      System.out.println("Did not found any files");
+      System.out.println("File not found");
       // TODO Auto-generated catch block
       e.printStackTrace();
     }
